@@ -34,8 +34,25 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<ApiResponse<List<Product>>> createProduct(@RequestBody Product product) {
         try {
-            //List<Product> products = productService.addNewProducts(product);
-            return ResponseEntity.ok(new ApiResponse<>(200, "Products retrieved", products));
+            return productService.addNewProducts(product);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(new ApiResponse<>(500, "An error occurred while retrieving the products", new ArrayList<>()));
+        }
+    }
+
+    @PutMapping
+    public ResponseEntity<ApiResponse<List<Product>>> uodateProduct(@RequestBody Product product, @PathVariable Long id) {
+        try {
+            return productService.updateProduct(product,id);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(new ApiResponse<>(500, "An error occurred while retrieving the products", new ArrayList<>()));
+        }
+    }
+
+    @DeleteMapping
+    public ResponseEntity<ApiResponse<List<Void>>> deleteProduct(@PathVariable Long id) {
+        try {
+            return productService.deleteProduct(id);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(new ApiResponse<>(500, "An error occurred while retrieving the products", new ArrayList<>()));
         }
