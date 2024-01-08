@@ -1,14 +1,23 @@
 package com.techbazaar.backend.Services;
 
-import com.techbazaar.backend.DTO.UserRegistrationDTO;
-import com.techbazaar.backend.Models.User;
 
-public interface UserService {
-    User register(UserRegistrationDTO registrationDTO);
-    void verifyAccount(String verificationCode);
-    User findByUsername(String username);
-    User findByEmail(String email);
-    void updateProfile(User user);
-    void initiatePasswordReset(String email);
-    void completePasswordReset(String token, String newPassword);
+import com.techbazaar.backend.Repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class UserService {
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private final JwtService jwtService;
+    @Autowired
+    private final AuthenticationManager authenticationManager;
+
 }
